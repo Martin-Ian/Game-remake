@@ -1,7 +1,7 @@
 # TO DO:
 
-* [ ] Create Processing files
-* [ ] Make sure Processing works
+* [x] Create Processing files
+* [x] Make sure Processing works
 * [ ] Begin on Entity class
 * [ ] Get a Player class as a child of entity
 * [ ] Get the Player to move on the screen
