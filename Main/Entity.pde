@@ -1,13 +1,21 @@
+/*************************
+  Entity.pde
+  
+  This class is the base class for 
+    all 'interactable' Objects
+*************************/
+
 class Entity
 {
   PVector position;
-  String collider;
+  String collider; //Not used yet
   PVector velocity;
   PVector dimentions;
-  color filler;
-  boolean moveable;
-  float ID = random(1);
+  color filler; //Optional to replace with a image
+  boolean moveable; //An immovable Entity won't be able to have a velocity added to it
+  float ID = random(1); //This is used in collision
 
+  //Base default constructor
   Entity()
   {
     position = new PVector(width/2, height/2);
@@ -18,6 +26,7 @@ class Entity
     moveable = true;
   }
 
+  //Constructor with position
   Entity(float posX, float posY)
   {
     position = new PVector(posX, posY);
@@ -28,6 +37,7 @@ class Entity
     moveable = true;
   }
 
+  //Constructor with position and dimentions
   Entity(float posX, float posY, float dimX, float dimY)
   {
     position = new PVector(posX, posY);
@@ -38,6 +48,7 @@ class Entity
     moveable = true;
   }
 
+  //Constructor with position, dimentions, and velocity
   Entity(float posX, float posY, float dimX, float dimY, float velX, float velY)
   {
     position = new PVector(posX, posY);
@@ -48,6 +59,8 @@ class Entity
     moveable = true;
   }
 
+  //Basic collision function, returns if given Entity is colliding with current Entity
+  //TODO: FIX THIS
   boolean collides(Entity E)
   {
     if (this.ID != E.ID)
@@ -69,12 +82,14 @@ class Entity
     return false;
   }
 
+  //Base update function
   void update()
   {
     if (moveable)
       position.add(velocity);
   }
 
+  //base display function
   void show()
   {
     fill(filler);
