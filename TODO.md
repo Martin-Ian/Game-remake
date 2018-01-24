@@ -2,11 +2,12 @@
 
 * [x] Create Processing files
 * [x] Make sure Processing works
-* [ ] Begin on Entity class
+* [x] Begin on Entity class
 * [ ] Get a Player class as a child of entity
 * [ ] Get the Player to move on the screen
-* [ ] Add a Wall class that is a child of Entity
+* [x] Add a Wall class that is a child of Entity
 * [ ] Get Player to be able to collide with Walls
+* [x] Get a camera to work
 * [ ] Add Enemy class that is a child of Entity
 * [ ] Make Bullet class that is a child of Entity
 * [ ] Get enemy to be able to move and shoot at Player
