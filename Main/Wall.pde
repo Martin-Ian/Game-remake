@@ -1,10 +1,10 @@
 /*************************************
-  Wall.pde
-  
-  This class is the wall class. Walls (as of now)
-    cannot be moved through by anything. Will add
-    special walls that Enemies can shoot through
-*************************************/
+ Wall.pde
+ 
+ This class is the wall class. Walls (as of now)
+ cannot be moved through by anything. Will add
+ special walls that Enemies can shoot through
+ *************************************/
 
 class Wall extends Entity //This class is a child of Entity
 {
@@ -25,7 +25,7 @@ class Wall extends Entity //This class is a child of Entity
     filler = color(0);
     collider = "RECTANGLE";
   }
-  
+
   //Constructor with position and dimentions
   Wall(float posX, float posY, float dimX, float dimY)
   {

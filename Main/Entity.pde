@@ -1,9 +1,9 @@
 /*************************
-  Entity.pde
-  
-  This class is the base class for 
-    all 'interactable' Objects
-*************************/
+ Entity.pde
+ 
+ This class is the base class for 
+ all 'interactable' Objects
+ *************************/
 
 class Entity
 {

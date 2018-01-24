@@ -1,10 +1,10 @@
 /********************************
-  Ian Martin 2018
-  BulletHell Remake
-********************************/
+ Ian Martin 2018
+ BulletHell Remake
+ ********************************/
 
 //test array
-ArrayList<Entity> allEntities = new ArrayList<Entity>();
+ArrayList<Entity> walls = new ArrayList<Entity>();
 //Player Entity
 Player player;
 //Camera controls
@@ -16,36 +16,35 @@ void setup()
 {
   fullScreen(P3D);
   //We need to use Processing's 3d renderer
-    //in order to access the camera function
-    
+  //in order to access the camera function
+
   //Initial camera position
   cameraX = width/2;
   cameraY = height/2;
-  
+
   //Object declarations:
   player = new Player();
-  for (int i = 0; i < 50; i++)
-  {
-    allEntities.add(new Entity());
-  }
-  allEntities.add(new Wall(width/2, 0, width, 20));
-  allEntities.add(new Wall(width/2, height, width, 20));
-  allEntities.add(new Wall(0, height/2, 20, height));
-  allEntities.add(new Wall(width, height/2, 20, height));
+  walls.add(new Wall(width/2, 0, width + 20, 20));
+  walls.add(new Wall(width/2, height, width + 20, 20));
+  walls.add(new Wall(0, height/2, 20, height + 20));
+  walls.add(new Wall(width, height/2, 20, height + 20));
 }
 
 void draw()
 {
   background(50);
-  for(Entity E : allEntities)
-    if(player.collides(E))
-      background(255, 0, 0);
+  for (Entity E : walls)
+    if (player.collides(E))
+    {
+      player.velocity.mult(-1);
+      player.update();
+    }
   player.move();
   updateEntities(player);
   cameraFollow(player);
   drawEntities(player);
-  updateEntities(allEntities);
-  drawEntities(allEntities);
+  updateEntities(walls);
+  drawEntities(walls);
 }
 
 void drawEntities(ArrayList<Entity> arr)
@@ -115,10 +114,10 @@ boolean setMove(int k, boolean b)
   case RIGHT:
   case 'D':
     return isRight = b;
-    
+
   case DOWN:
   case 'S':
-     return isDown = b;
+    return isDown = b;
 
   default:
     return b;
