@@ -3,8 +3,8 @@
 * [x] Create Processing files
 * [x] Make sure Processing works
 * [x] Begin on Entity class
-* [ ] Get a Player class as a child of entity
-* [ ] Get the Player to move on the screen
+* [x] Get a Player class as a child of entity
+* [x] Get the Player to move on the screen
 * [x] Add a Wall class that is a child of Entity
 * [ ] Get Player to be able to collide with Walls
 * [x] Get a camera to work
