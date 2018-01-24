@@ -1,13 +1,28 @@
+/********************************
+  Ian Martin 2018
+  BulletHell Remake
+********************************/
+
+//test array
 ArrayList<Entity> allEntities = new ArrayList<Entity>();
+//Player Entity
 Player player;
+//Camera controls
 float cameraX, cameraY;
+//Player Controls
 boolean isUp, isDown, isRight, isLeft;
 
 void setup()
 {
   fullScreen(P3D);
+  //We need to use Processing's 3d renderer
+    //in order to access the camera function
+    
+  //Initial camera position
   cameraX = width/2;
   cameraY = height/2;
+  
+  //Object declarations:
   player = new Player();
   for (int i = 0; i < 50; i++)
   {
@@ -51,6 +66,8 @@ void updateEntities(ArrayList<Entity> arr)
   }
 }
 
+//Same as above, but for single entities
+
 void drawEntities(Entity E)
 {
   rectMode(CENTER);
@@ -63,12 +80,16 @@ void updateEntities(Entity E)
   E.update();
 }
 
+//Function for the camera to follow a specific Entity
+
 void cameraFollow(Entity E)
 {
   cameraX = lerp(cameraX, E.position.x, 0.05);
   cameraY = lerp(cameraY, E.position.y, 0.05);
   camera(cameraX, cameraY, (height/2) / tan(PI*30.0 / 180.0), cameraX, cameraY, 0, 0, 1, 0);
 }
+
+//Keyboard input
 
 void keyPressed() 
 {
