@@ -60,7 +60,7 @@ class Entity
   }
 
   //Basic collision function, returns if given Entity is colliding with current Entity
-  //TODO: FIX THIS
+  //TODO: FIX THIS?
   boolean collides(Entity E)
   {
     if (this.ID != E.ID)
@@ -71,7 +71,7 @@ class Entity
         {
           if (this.position.y + this.dimentions.y/2 > E.position.y - E.dimentions.y/2)
           {
-            if (this.position.y + this.dimentions.y/2 < E.position.y - E.dimentions.y/2)
+            if (this.position.y - this.dimentions.y/2 < E.position.y + E.dimentions.y/2)
             {
               return true;
             }
