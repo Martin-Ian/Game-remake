@@ -1,5 +1,12 @@
-class Player extends Entity
+/*******************************
+  Player.pde
+  
+  This class is the player class
+*******************************/
+
+class Player extends Entity //This is based off of the Entity class
 {
+  //Default constructor
   Player()
   {
     super();
@@ -7,6 +14,7 @@ class Player extends Entity
     velocity.setMag(0);
   }
   
+  //Constructor with position
   Player(float posX, float posY)
   {
     super(posX, posY);
@@ -14,6 +22,7 @@ class Player extends Entity
     velocity.setMag(0);
   }
   
+  //This functions governs the movement of the player
   void move()
   {
     if(isRight)
