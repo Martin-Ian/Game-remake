@@ -7,6 +7,8 @@
 ArrayList<Entity> walls = new ArrayList<Entity>();
 //Player Entity
 Player player;
+//Enemy Entity
+ArrayList<Entity> enemies = new ArrayList<Entity>();
 //Camera controls
 float cameraX, cameraY;
 //Player Controls
@@ -19,30 +21,47 @@ void setup()
   //in order to access the camera function
 
   //Initial camera position
-  cameraX = width/2;
+  cameraX = width/4;
   cameraY = height/2;
 
   //Object declarations:
-  player = new Player();
+  player = new Player(width/4, height/2);
+  for (int i = 0; i < 10; i++)
+    enemies.add(new Enemy(width*3/4, height/2));
   walls.add(new Wall(width/2, 0, width + 20, 20));
   walls.add(new Wall(width/2, height, width + 20, 20));
   walls.add(new Wall(0, height/2, 20, height + 20));
   walls.add(new Wall(width, height/2, 20, height + 20));
+  walls.add(new Wall(width/2, height/2, 20, height*2/3));
 }
 
 void draw()
 {
   background(50);
-  for (Entity E : walls)
+  for (Entity E : walls) //For each Wall
+  {
     if (player.collides(E))
     {
-      player.velocity.mult(-1);
-      player.update();
+      player.velocity.mult(-1); //Player bounce off wall
+      player.update();  //Apply velocity
     }
-  player.move();
+    for (Entity EN : enemies) //For each Enemy
+    {
+      if (EN.collides(E))
+      {
+        EN.velocity.mult(-2); //Enemy bounces off wall
+        EN.update();  //apply velocity
+      }
+    }
+  }
+
+  updateEntities(enemies);
+  drawEntities(enemies);
+
   updateEntities(player);
   cameraFollow(player);
   drawEntities(player);
+
   updateEntities(walls);
   drawEntities(walls);
 }
@@ -61,6 +80,7 @@ void updateEntities(ArrayList<Entity> arr)
 {
   for (Entity E : arr)
   {
+    E.move();
     E.update();
   }
 }
@@ -76,6 +96,7 @@ void drawEntities(Entity E)
 
 void updateEntities(Entity E)
 {
+  E.move();
   E.update();
 }
 
@@ -122,4 +143,14 @@ boolean setMove(int k, boolean b)
   default:
     return b;
   }
+}
+
+//Helper function...
+
+float floatLimit(float A, float B)
+{
+  if (A > B)
+    return A;
+  else
+    return B;
 }

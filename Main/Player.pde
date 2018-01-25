@@ -6,12 +6,15 @@
 
 class Player extends Entity //This is based off of the Entity class
 {
+  float baseSpeed = 7, speed = 7;
+
   //Default constructor
   Player()
   {
     super();
     filler = color(0, 255, 0);
     velocity.setMag(0);
+    type = "Player";
   }
 
   //Constructor with position
@@ -20,17 +23,18 @@ class Player extends Entity //This is based off of the Entity class
     super(posX, posY);
     filler = color(0, 255, 0);
     velocity.setMag(0);
+    type = "Player";
   }
 
-  //This functions governs the movement of the player
+  //This function governs the movement of the player
   void move()
   {
     if (isRight)
     {
-      velocity.x = lerp(velocity.x, 5, 0.1);
+      velocity.x = lerp(velocity.x, speed, 0.1);
     } else if (isLeft)
     {
-      velocity.x = lerp(velocity.x, -5, 0.1);
+      velocity.x = lerp(velocity.x, -speed, 0.1);
     } else 
     {
       velocity.x = lerp(velocity.x, 0, 0.1);
@@ -38,13 +42,16 @@ class Player extends Entity //This is based off of the Entity class
 
     if (isDown)
     {
-      velocity.y = lerp(velocity.y, 5, 0.1);
+      velocity.y = lerp(velocity.y, speed, 0.1);
     } else if (isUp)
     {
-      velocity.y = lerp(velocity.y, -5, 0.1);
+      velocity.y = lerp(velocity.y, -speed, 0.1);
     } else 
     {
       velocity.y = lerp(velocity.y, 0, 0.1);
     }
+    velocity.limit(speed);
+    speed -= 0.01;
+    if (speed < baseSpeed) speed = baseSpeed;
   }
 }

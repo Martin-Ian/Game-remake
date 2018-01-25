@@ -8,7 +8,7 @@
 class Entity
 {
   PVector position;
-  String collider; //Not used yet
+  String type;
   PVector velocity;
   PVector dimentions;
   color filler; //Optional to replace with a image
@@ -19,7 +19,7 @@ class Entity
   Entity()
   {
     position = new PVector(width/2, height/2);
-    collider = "NONE";
+    type = "NONE";
     velocity = new PVector(random(-3, 3), random(-3, 3));
     filler = color(random(255), random(255), random(255));
     dimentions = new PVector(50, 50);
@@ -30,7 +30,7 @@ class Entity
   Entity(float posX, float posY)
   {
     position = new PVector(posX, posY);
-    collider = "NONE";
+    type = "NONE";
     velocity = new PVector(random(-3, 3), random(-3, 3));
     filler = color(random(255), random(255), random(255));
     dimentions = new PVector(50, 50);
@@ -41,7 +41,7 @@ class Entity
   Entity(float posX, float posY, float dimX, float dimY)
   {
     position = new PVector(posX, posY);
-    collider = "NONE";
+    type = "NONE";
     velocity = new PVector(random(-3, 3), random(-3, 3));
     filler = color(random(255), random(255), random(255));
     dimentions = new PVector(dimX, dimY);
@@ -52,7 +52,7 @@ class Entity
   Entity(float posX, float posY, float dimX, float dimY, float velX, float velY)
   {
     position = new PVector(posX, posY);
-    collider = "NONE";
+    type = "NONE";
     velocity = new PVector(velX, velY);
     filler = color(random(255), random(255), random(255));
     dimentions = new PVector(dimX, dimY);
@@ -60,7 +60,6 @@ class Entity
   }
 
   //Basic collision function, returns if given Entity is colliding with current Entity
-  //TODO: FIX THIS?
   boolean collides(Entity E)
   {
     if (this.ID != E.ID)
@@ -94,5 +93,10 @@ class Entity
   {
     fill(filler);
     rect(position.x, position.y, dimentions.x, dimentions.y);
+  }
+  
+  void move()
+  {
+    //Intentionally blank
   }
 }

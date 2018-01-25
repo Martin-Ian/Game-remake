@@ -14,7 +14,7 @@ class Wall extends Entity //This class is a child of Entity
     super();
     moveable = false;
     filler = color(0);
-    collider = "RECTANGLE";
+    type = "Wall";
   }
 
   //Constructor with position; wall will be a 50x50 square
@@ -23,7 +23,7 @@ class Wall extends Entity //This class is a child of Entity
     super(posX, posY);
     moveable = false;
     filler = color(0);
-    collider = "RECTANGLE";
+    type = "Wall";
   }
 
   //Constructor with position and dimentions
@@ -32,6 +32,6 @@ class Wall extends Entity //This class is a child of Entity
     super(posX, posY, dimX, dimY);
     moveable = false;
     filler = color(0);
-    collider = "RECTANGLE";
+    type = "Wall";
   }
 }

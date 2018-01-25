@@ -6,9 +6,10 @@
 * [x] Get a Player class as a child of entity
 * [x] Get the Player to move on the screen
 * [x] Add a Wall class that is a child of Entity
-* [ ] Get Player to be able to collide with Walls
+* [x] Get Player to be able to collide with Walls
 * [x] Get a camera to work
-* [ ] Add Enemy class that is a child of Entity
+* [x] Add Enemy class that is a child of Entity
+* [ ] Add a separate update function to Enemy
 * [ ] Make Bullet class that is a child of Entity
 * [ ] Get enemy to be able to move and shoot at Player
 * [ ] Get Enemy and Bullet to collide with Walls
