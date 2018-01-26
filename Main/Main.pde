@@ -9,6 +9,8 @@ ArrayList<Entity> walls = new ArrayList<Entity>();
 Player player;
 //Enemy Entity
 ArrayList<Entity> enemies = new ArrayList<Entity>();
+//Bullet arraylist
+ArrayList<Entity> bullets = new ArrayList<Entity>();
 //Camera controls
 float cameraX, cameraY;
 //Player Controls
@@ -38,22 +40,8 @@ void setup()
 void draw()
 {
   background(50);
-  for (Entity E : walls) //For each Wall
-  {
-    if (player.collides(E))
-    {
-      player.velocity.mult(-1); //Player bounce off wall
-      player.update();  //Apply velocity
-    }
-    for (Entity EN : enemies) //For each Enemy
-    {
-      if (EN.collides(E))
-      {
-        EN.velocity.mult(-2); //Enemy bounces off wall
-        EN.update();  //apply velocity
-      }
-    }
-  }
+
+  handleColision();
 
   updateEntities(enemies);
   drawEntities(enemies);
@@ -61,6 +49,9 @@ void draw()
   updateEntities(player);
   cameraFollow(player);
   drawEntities(player);
+
+  updateEntities(bullets);
+  drawEntities(bullets);
 
   updateEntities(walls);
   drawEntities(walls);
@@ -107,6 +98,52 @@ void cameraFollow(Entity E)
   cameraX = lerp(cameraX, E.position.x, 0.05);
   cameraY = lerp(cameraY, E.position.y, 0.05);
   camera(cameraX, cameraY, (height/2) / tan(PI*30.0 / 180.0), cameraX, cameraY, 0, 0, 1, 0);
+}
+
+void handleColision()
+{
+  for (Entity E : walls) //For each Wall
+  {
+    if (player.alive && player.collides(E))
+    {
+      player.velocity.mult(-1); //Player bounce off wall
+      player.update();  //Apply velocity
+    }
+    for (Entity EN : enemies) //For each Enemy
+    {
+      if (EN.collides(E))
+      {
+        EN.velocity.mult(-2); //Enemy bounces off wall
+        EN.update();  //apply velocity
+      }
+    }
+    for (int i = bullets.size() - 1; i >= 0; i--)
+    {
+      if (bullets.get(i).collides(E))
+      {
+        bullets.remove(i);
+        continue;
+      } else if (player.alive && bullets.get(i).collides(player))
+      {
+        bullets.remove(i);
+        player.lives--;
+      }
+    }
+  }
+  if (player.alive) {
+    for (int i = enemies.size()-1; i >= 0; i--)
+    {
+      if (player.collides(enemies.get(i)))
+      {
+        enemies.remove(i);
+      }
+    }
+  }
+
+  if (player.lives <= 0)
+  {
+    player.alive = false;
+  }
 }
 
 //Keyboard input

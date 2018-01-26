@@ -27,16 +27,20 @@ class Enemy extends Entity //Child of Entity
     type = "Enemy";
   }
 
-  //This says how the Enemy moves... and how it updates too... 
-  //TODO: Add Shooting an move updates to separate update function
+  //This is the update function for Enemy
+  void update()
+  {
+    if (moveable)
+      position.add(velocity);
+    cooldown--;
+  }
+
+  //This says how the Enemy moves
   void move()
   {
     //see if the player is close
-    if (player != null && dist(player.position.x, player.position.y, position.x, position.y) <= sight/2)
+    if (player != null && player.alive && dist(player.position.x, player.position.y, position.x, position.y) <= sight/2)
     {
-      //Updates...Read TODO
-      /****************************/
-      cooldown--;
       inSight = true;
       pushMatrix();
       translate(position.x, position.y);
@@ -44,8 +48,7 @@ class Enemy extends Entity //Child of Entity
       popMatrix();
       ang1 = angtemp - floatLimit(map(cooldown, maxCoolDown, 0, 0.7, 0.1), 0.1);
       ang2 = angtemp + floatLimit(map(cooldown, maxCoolDown, 0, 0.7, 0.1), 0.1);
-      /****************************/
-      
+
       //Apply a velocity towards the player
       if (player.position.x > position.x)
       {
@@ -68,12 +71,11 @@ class Enemy extends Entity //Child of Entity
       {
         velocity.y = lerp(velocity.y, 0, 0.1);
       }
-      
-      //Add to update...
+
       if (cooldown < -maxCoolDown/2)
       {
-        //SHOOT BULLET
-        cooldown = maxCoolDown;
+        shoot();
+        cooldown = maxCoolDown/2;
       }
     } else
     {
@@ -100,9 +102,18 @@ class Enemy extends Entity //Child of Entity
         arc(position.x, position.y, map(cooldown, 0, -maxCoolDown/2, 0, sight), map(cooldown, 0, -maxCoolDown/2, 0, sight), ang1, ang2);
       }
     }
-    
+
     //How the enemy looks
     fill(filler);
     rect(position.x, position.y, dimentions.x, dimentions.y);
+  }
+
+  //Basic shoot function, shoots one bullet at player
+  void shoot()
+  {
+    pushMatrix();
+    translate(position.x, position.y);
+    bullets.add(new Bullet(position.x, position.y, atan2(player.position.y - position.y, player.position.x - position.x)));
+    popMatrix();
   }
 }

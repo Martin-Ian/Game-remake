@@ -7,6 +7,8 @@
 class Player extends Entity //This is based off of the Entity class
 {
   float baseSpeed = 7, speed = 7;
+  int lives = 3;
+  boolean alive = true;
 
   //Default constructor
   Player()
@@ -53,5 +55,22 @@ class Player extends Entity //This is based off of the Entity class
     velocity.limit(speed);
     speed -= 0.01;
     if (speed < baseSpeed) speed = baseSpeed;
+  }
+
+  //Player update function
+  void update()
+  {
+    if (moveable && alive)
+      position.add(velocity);
+  }
+
+  //Player show function
+  void show()
+  {
+    if (alive)
+    {
+      fill(filler);
+      rect(position.x, position.y, dimentions.x, dimentions.y);
+    }
   }
 }
