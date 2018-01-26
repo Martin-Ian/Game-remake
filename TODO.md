@@ -9,11 +9,11 @@
 * [x] Get Player to be able to collide with Walls
 * [x] Get a camera to work
 * [x] Add Enemy class that is a child of Entity
-* [ ] Add a separate update function to Enemy
-* [ ] Make Bullet class that is a child of Entity
-* [ ] Get enemy to be able to move and shoot at Player
-* [ ] Get Enemy and Bullet to collide with Walls
-* [ ] Let Player be able to be destroyed and destroy Enemy
+* [x] Add a separate update function to Enemy
+* [x] Make Bullet class that is a child of Entity
+* [x] Get enemy to be able to move and shoot at Player
+* [x] Get Enemy and Bullet to collide with Walls
+* [x] Let Player be able to be destroyed and destroy Enemy
 * [ ] Make GameState to handle levels
 * [ ] Create basic levels and title screen
 * [ ] Create Tutorial
