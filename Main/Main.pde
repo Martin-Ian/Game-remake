@@ -1,13 +1,15 @@
 /********************************
  Ian Martin 2018
  BulletHell Remake
+ 
+ Main.pde
  ********************************/
 
-//test array
+//Wall arrayList
 ArrayList<Entity> walls = new ArrayList<Entity>();
 //Player Entity
 Player player;
-//Enemy Entity
+//Enemy arrayList
 ArrayList<Entity> enemies = new ArrayList<Entity>();
 //Bullet arraylist
 ArrayList<Entity> bullets = new ArrayList<Entity>();
