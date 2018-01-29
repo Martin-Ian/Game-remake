@@ -34,10 +34,7 @@ class Wall extends Entity //This class is a child of Entity
     moveable = false;
     filler = color(0);
     type = "Wall";
-    if (B)
-    {
-      special = B;
-    }
+    special = B;
   }
 
   void show()
@@ -45,9 +42,7 @@ class Wall extends Entity //This class is a child of Entity
     if (special)
     {
       pushMatrix();
-      strokeWeight(5);
-      stroke(200, 0, 200);
-      noFill();
+      fill(200, 0, 200);
       rect(position.x, position.y, dimentions.x, dimentions.y);
       popMatrix();
     } else 

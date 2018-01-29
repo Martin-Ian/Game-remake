@@ -16,13 +16,13 @@ ArrayList<Entity> bullets = new ArrayList<Entity>();
 //Camera controls
 float cameraX, cameraY;
 //Player Controls
-boolean isUp, isDown, isRight, isLeft;
+boolean isUp, isDown, isRight, isLeft, space;
 Stage stage;
 
 void setup()
 {
-  //fullScreen(P3D);
-  size(1550, 850, P3D);
+  fullScreen(P3D);
+  //size(1550, 850, P3D);
   //We need to use Processing's 3d renderer
   //in order to access the camera function
 
@@ -86,8 +86,8 @@ void cameraFollow(Entity E)
     cameraY = lerp(cameraY, E.position.y, 0.05);
   } else 
   {
-    cameraX = lerp(cameraX, stage.Width/2, 0.05);
-    cameraY = lerp(cameraY, stage.Height/2, 0.05);
+    cameraX = lerp(cameraX, stage.Width/2, 0.005);
+    cameraY = lerp(cameraY, stage.Height/2, 0.005);
   }
   camera(cameraX, cameraY, (height/2) / tan(PI*30.0 / 180.0), cameraX, cameraY, 0, 0, 1, 0);
 }
@@ -111,7 +111,7 @@ void handleColision()
     }
     for (int i = bullets.size() - 1; i >= 0; i--)
     {
-      if (E.special && bullets.get(i).collides(E))
+      if (E.special == false && bullets.get(i).collides(E))
       {
         bullets.remove(i);
         continue;
@@ -122,6 +122,12 @@ void handleColision()
       }
     }
   }
+
+  if (player.lives <= 0)
+  {
+    player.alive = false;
+  }
+
   if (player.alive) {
     for (int i = enemies.size()-1; i >= 0; i--)
     {
@@ -130,11 +136,6 @@ void handleColision()
         enemies.remove(i);
       }
     }
-  }
-
-  if (player.lives <= 0)
-  {
-    player.alive = false;
   }
 }
 
@@ -168,6 +169,9 @@ boolean setMove(int k, boolean b)
   case DOWN:
   case 'S':
     return isDown = b;
+
+  case ' ':
+    return space = b;
 
   default:
     return b;

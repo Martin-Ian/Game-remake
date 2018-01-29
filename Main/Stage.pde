@@ -46,15 +46,38 @@ class Stage
     if (player.alive == false)
     {
       deathScreen();
+    } else if(enemies.size() == 0)
+    {
+      winScreen();
     }
   }
 }
 
 void deathScreen()
 {
+  pushMatrix();
   textSize(32);
-  stroke(255);
-  text("You Died!\nPress the 'SPACE-BAR' to continue!", width/2, height/2);
+  fill(255);
+  text("You Died!\nPress the 'SPACE-BAR' to restart!", cameraX, cameraY);
+  popMatrix();
+  if (space)
+  {
+    stageReset();
+  }
+}
+
+void winScreen()
+{
+  pushMatrix();
+  textSize(30);
+  fill(255);
+  text("You WON!\nPress the 'SPACE-BAR' to restart!\nEND OF SAMPLE STAGE", cameraX, cameraY);
+  popMatrix();
+  if (space)
+  {
+    //stage.level++;
+    stageReset();
+  }
 }
 
 void loadWalls(int levels)
@@ -62,16 +85,36 @@ void loadWalls(int levels)
   switch(levels)
   {
   case 0:
-    player = new Player(width/4, height/2);
+    stage.Width = 1600;
+    stage.Height = 900;
+    player = new Player(stage.Width/4, stage.Height/2);
     for (int i = 0; i < 10; i++)
-      enemies.add(new Enemy(width*3/4, height/2));
-    walls.add(new Wall(width/2, 0, width + 20, 20, false));
-    walls.add(new Wall(width/2, height, width + 20, 20, false));
-    walls.add(new Wall(0, height/2, 20, height + 20, false));
-    walls.add(new Wall(width, height/2, 20, height + 20, false));
-    walls.add(new Wall(width/2, height/2, 20, height*2/3, true));
+      enemies.add(new Enemy(stage.Width*3/4, stage.Height/2));
+    walls.add(new Wall(stage.Width/2, 0, stage.Width + 20, 20, false));
+    walls.add(new Wall(stage.Width/2, stage.Height, stage.Width + 20, 20, false));
+    walls.add(new Wall(0, stage.Height/2, 20, stage.Height + 20, false));
+    walls.add(new Wall(stage.Width, stage.Height/2, 20, stage.Height + 20, false));
+    walls.add(new Wall(stage.Width/2, stage.Height/2, 20, stage.Height*2/3, false));
     break;
   case 1:
     break;
   }
+}
+
+void stageReset()
+{
+  for (int i = walls.size() - 1; i >= 0; i--)
+  { 
+    walls.remove(i);
+  }
+  for (int i = enemies.size() - 1; i >= 0; i--)
+  { 
+    enemies.remove(i);
+  }
+  for (int i = bullets.size() - 1; i >= 0; i--)
+  { 
+    bullets.remove(i);
+  }
+  player = null;
+  stage.firstFrame = true;
 }

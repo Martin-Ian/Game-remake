@@ -106,6 +106,11 @@ class Enemy extends Entity //Child of Entity
     //How the enemy looks
     fill(filler);
     rect(position.x, position.y, dimentions.x, dimentions.y);
+    if(cooldown < 0 && abs(cooldown) % 10 < 5)
+    {
+      fill(100, 0, 0);
+      rect(position.x, position.y, dimentions.x/2, dimentions.y/2);
+    }
   }
 
   //Basic shoot function, shoots one bullet at player
