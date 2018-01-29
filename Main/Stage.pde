@@ -95,6 +95,8 @@ void loadWalls(int levels)
     walls.add(new Wall(0, stage.Height/2, 20, stage.Height + 20, false));
     walls.add(new Wall(stage.Width, stage.Height/2, 20, stage.Height + 20, false));
     walls.add(new Wall(stage.Width/2, stage.Height/2, 20, stage.Height*2/3, false));
+    walls.add(new Wall(stage.Width/4*3, stage.Height/5, stage.Width/4, 20, true));
+    walls.add(new Wall(stage.Width/4*3, stage.Height/5*4, stage.Width/4, 20, true));
     break;
   case 1:
     break;

@@ -8,7 +8,6 @@
 
 class Wall extends Entity //This class is a child of Entity
 {
-  boolean special = false;
   //Default constructor
   Wall()
   {
