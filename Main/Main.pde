@@ -17,46 +17,29 @@ ArrayList<Entity> bullets = new ArrayList<Entity>();
 float cameraX, cameraY;
 //Player Controls
 boolean isUp, isDown, isRight, isLeft;
+Stage stage;
 
 void setup()
 {
-  fullScreen(P3D);
+  //fullScreen(P3D);
+  size(1550, 850, P3D);
   //We need to use Processing's 3d renderer
   //in order to access the camera function
 
   //Initial camera position
   cameraX = width/4;
   cameraY = height/2;
+  textAlign(CENTER);
 
-  //Object declarations:
-  player = new Player(width/4, height/2);
-  for (int i = 0; i < 10; i++)
-    enemies.add(new Enemy(width*3/4, height/2));
-  walls.add(new Wall(width/2, 0, width + 20, 20));
-  walls.add(new Wall(width/2, height, width + 20, 20));
-  walls.add(new Wall(0, height/2, 20, height + 20));
-  walls.add(new Wall(width, height/2, 20, height + 20));
-  walls.add(new Wall(width/2, height/2, 20, height*2/3));
+  //Declare stage
+  stage = new Stage();
 }
 
 void draw()
 {
-  background(50);
-
-  handleColision();
-
-  updateEntities(enemies);
-  drawEntities(enemies);
-
-  updateEntities(player);
-  cameraFollow(player);
-  drawEntities(player);
-
-  updateEntities(bullets);
-  drawEntities(bullets);
-
-  updateEntities(walls);
-  drawEntities(walls);
+  if (stage.firstFrame)
+    stage._setup();
+  stage._draw();
 }
 
 void drawEntities(ArrayList<Entity> arr)
@@ -97,8 +80,15 @@ void updateEntities(Entity E)
 
 void cameraFollow(Entity E)
 {
-  cameraX = lerp(cameraX, E.position.x, 0.05);
-  cameraY = lerp(cameraY, E.position.y, 0.05);
+  if (player.alive)
+  {
+    cameraX = lerp(cameraX, E.position.x, 0.05);
+    cameraY = lerp(cameraY, E.position.y, 0.05);
+  } else 
+  {
+    cameraX = lerp(cameraX, stage.Width/2, 0.05);
+    cameraY = lerp(cameraY, stage.Height/2, 0.05);
+  }
   camera(cameraX, cameraY, (height/2) / tan(PI*30.0 / 180.0), cameraX, cameraY, 0, 0, 1, 0);
 }
 
@@ -121,7 +111,7 @@ void handleColision()
     }
     for (int i = bullets.size() - 1; i >= 0; i--)
     {
-      if (bullets.get(i).collides(E))
+      if (E.special && bullets.get(i).collides(E))
       {
         bullets.remove(i);
         continue;

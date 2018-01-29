@@ -14,6 +14,7 @@ class Entity
   color filler; //Optional to replace with a image
   boolean moveable; //An immovable Entity won't be able to have a velocity added to it
   float ID = random(1); //This is used in collision
+  boolean special;
 
   //Base default constructor
   Entity()

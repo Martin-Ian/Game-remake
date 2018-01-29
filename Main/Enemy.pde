@@ -52,10 +52,10 @@ class Enemy extends Entity //Child of Entity
       //Apply a velocity towards the player
       if (player.position.x > position.x)
       {
-        velocity.x = lerp(velocity.x, speed, 0.1);
+        velocity.x = lerp(velocity.x, speed, 0.01);
       } else if (player.position.x < position.x)
       {
-        velocity.x = lerp(velocity.x, -speed, 0.1);
+        velocity.x = lerp(velocity.x, -speed, 0.01);
       } else 
       {
         velocity.x = lerp(velocity.x, 0, 0.1);
@@ -63,10 +63,10 @@ class Enemy extends Entity //Child of Entity
 
       if (player.position.y > position.y)
       {
-        velocity.y = lerp(velocity.y, speed, 0.1);
+        velocity.y = lerp(velocity.y, speed, 0.01);
       } else if (player.position.y < position.y)
       {
-        velocity.y = lerp(velocity.y, -speed, 0.1);
+        velocity.y = lerp(velocity.y, -speed, 0.01);
       } else 
       {
         velocity.y = lerp(velocity.y, 0, 0.1);

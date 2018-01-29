@@ -7,7 +7,7 @@
 class Player extends Entity //This is based off of the Entity class
 {
   float baseSpeed = 7, speed = 7;
-  int lives = 3;
+  int lives = 1;
   boolean alive = true;
 
   //Default constructor

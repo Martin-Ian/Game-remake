@@ -8,6 +8,7 @@
 
 class Wall extends Entity //This class is a child of Entity
 {
+  boolean special = false;
   //Default constructor
   Wall()
   {
@@ -27,11 +28,32 @@ class Wall extends Entity //This class is a child of Entity
   }
 
   //Constructor with position and dimentions
-  Wall(float posX, float posY, float dimX, float dimY)
+  Wall(float posX, float posY, float dimX, float dimY, boolean B)
   {
     super(posX, posY, dimX, dimY);
     moveable = false;
     filler = color(0);
     type = "Wall";
+    if (B)
+    {
+      special = B;
+    }
+  }
+
+  void show()
+  {
+    if (special)
+    {
+      pushMatrix();
+      strokeWeight(5);
+      stroke(200, 0, 200);
+      noFill();
+      rect(position.x, position.y, dimentions.x, dimentions.y);
+      popMatrix();
+    } else 
+    {
+      fill(filler);
+      rect(position.x, position.y, dimentions.x, dimentions.y);
+    }
   }
 }
