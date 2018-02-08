@@ -13,6 +13,8 @@ Player player;
 ArrayList<Entity> enemies = new ArrayList<Entity>();
 //Bullet arraylist
 ArrayList<Entity> bullets = new ArrayList<Entity>();
+//Particles
+ArrayList<Entity> particles = new ArrayList<Entity>();
 //Camera controls
 float cameraX, cameraY;
 //Player Controls
@@ -21,10 +23,7 @@ Stage stage;
 
 void setup()
 {
-  fullScreen(P3D);
-  //size(1550, 850, P3D);
-  //We need to use Processing's 3d renderer
-  //in order to access the camera function
+  fullScreen();
 
   //Initial camera position
   cameraX = width/4;
@@ -46,16 +45,18 @@ void drawEntities(ArrayList<Entity> arr)
 {
   rectMode(CENTER);
   noStroke();
-  for (Entity E : arr)
+  for (int i = arr.size() - 1; i >= 0; i--)
   {
+    Entity E = arr.get(i);
     E.show();
   }
 }
 
 void updateEntities(ArrayList<Entity> arr)
 {
-  for (Entity E : arr)
+  for (int i = arr.size() - 1; i >= 0; i--)
   {
+    Entity E = arr.get(i);
     E.move();
     E.update();
   }
@@ -89,33 +90,92 @@ void cameraFollow(Entity E)
     cameraX = lerp(cameraX, stage.Width/2, 0.005);
     cameraY = lerp(cameraY, stage.Height/2, 0.005);
   }
-  camera(cameraX, cameraY, (height/2) / tan(PI*30.0 / 180.0), cameraX, cameraY, 0, 0, 1, 0);
 }
 
 void handleColision()
 {
+  //  1
+  // 3 4
+  //  2
+
   for (Entity E : walls) //For each Wall
   {
-    if (player.alive && player.collides(E))
+    if (player.alive && player.collides(E) != -1)
     {
-      player.velocity.mult(-1); //Player bounce off wall
-      player.update();  //Apply velocity
+      switch(player.collides(E))
+      {
+      case 1:
+        player.velocity.y = 0;
+        player.position.y -= 2;
+        break;
+      case 2:
+        player.velocity.x = 0;
+        player.position.x += 2;
+        break;
+      case 3:
+        player.velocity.y = 0;
+        player.position.y += 2;
+        break;
+      case 4:
+        player.velocity.x = 0;
+        player.position.x -= 2;
+        break;
+      }
     }
     for (Entity EN : enemies) //For each Enemy
     {
-      if (EN.collides(E))
+      if (EN.collides(E) != -1)
       {
-        EN.velocity.mult(-2); //Enemy bounces off wall
-        EN.update();  //apply velocity
+        switch(EN.collides(E))
+        {
+        case 1:
+          EN.velocity.y *= -1;
+          EN.position.y -= 1;
+          break;
+        case 2:
+          EN.velocity.x *= -1;
+          EN.position.x += 1;
+          break;
+        case 3:
+          EN.velocity.y *= -1;
+          EN.position.y += 1;
+          break;
+        case 4:
+          EN.velocity.x *= -1;
+          EN.position.x -= 1;
+          break;
+        }
       }
     }
     for (int i = bullets.size() - 1; i >= 0; i--)
     {
-      if (E.special == false && bullets.get(i).collides(E))
+      if (E.special == -1 && bullets.get(i).collides(E) != -1)
       {
         bullets.remove(i);
         continue;
-      } else if (player.alive && bullets.get(i).collides(player))
+      } else if (E.special == 2 && bullets.get(i).collides(E) != -1)
+      {
+        switch(bullets.get(i).collides(E))
+        {
+        case 1:
+          bullets.get(i).velocity.y *= -1;
+          bullets.get(i).position.y -= 2;
+          break;
+        case 2:
+          bullets.get(i).velocity.x *= -1;
+          bullets.get(i).position.x += 2;
+          break;
+        case 3:
+          bullets.get(i).velocity.y *= -1;
+          bullets.get(i).position.y += 2;
+          break;
+        case 4:
+          bullets.get(i).velocity.x *= -1;
+          bullets.get(i).position.x -= 2;
+          break;
+        }
+      }  
+      if (player.alive && bullets.get(i).collides(player) != -1)
       {
         bullets.remove(i);
         player.lives--;
@@ -123,16 +183,69 @@ void handleColision()
     }
   }
 
+
+  for (Entity EN : enemies)
+  {
+    for (Entity ENE : enemies)
+    {
+      if (EN.collides(ENE) != -1)
+      {
+        switch(EN.collides(ENE))
+        {
+        case 1:
+          EN.velocity.y *= -1;
+          EN.position.y -= 1;
+          ENE.velocity.y *= -1;
+          ENE.position.y += 1;
+          break;
+        case 2:
+          EN.velocity.x *= -1;
+          EN.position.x += 1;
+          ENE.velocity.x *= -1;
+          ENE.position.x -= 1;
+          break;
+        case 3:
+          EN.velocity.y *= -1;
+          EN.position.y += 1;
+          ENE.velocity.y *= -1;
+          ENE.position.y -= 1;
+          break;
+        case 4:
+          EN.velocity.x *= -1;
+          EN.position.x -= 1;
+          ENE.velocity.x *= -1;
+          ENE.position.x += 1;
+          break;
+        }
+      }
+    }
+  }
+
   if (player.lives <= 0)
   {
     player.alive = false;
+    player.lives = 1;
+    player.velocity.setMag(1);
+    for (int i = 0; i < 25; i++)
+    {
+      Entity P = new Entity(player.position.x, player.position.y);
+      P.dimentions.x = 5;
+      P.dimentions.y = 5;
+      P.filler = player.filler;
+      P.velocity.x = random(-2, 2);
+      P.velocity.y = random(-2, 2);
+      P.velocity.add(player.velocity);
+      particles.add(P);
+    }
   }
 
   if (player.alive) {
     for (int i = enemies.size()-1; i >= 0; i--)
     {
-      if (player.collides(enemies.get(i)))
+      if (player.collides(enemies.get(i)) != -1)
       {
+        if (enemies.get(i).parent != null)
+          enemies.get(i).parent.children.remove(enemies.get(i));
         enemies.remove(i);
       }
     }

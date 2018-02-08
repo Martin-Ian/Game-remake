@@ -27,7 +27,7 @@ class Wall extends Entity //This class is a child of Entity
   }
 
   //Constructor with position and dimentions
-  Wall(float posX, float posY, float dimX, float dimY, boolean B)
+  Wall(float posX, float posY, float dimX, float dimY, int B)
   {
     super(posX, posY, dimX, dimY);
     moveable = false;
@@ -38,13 +38,19 @@ class Wall extends Entity //This class is a child of Entity
 
   void show()
   {
-    if (special)
+    if (special == 1)
     {
       pushMatrix();
       fill(200, 0, 200);
       rect(position.x, position.y, dimentions.x, dimentions.y);
       popMatrix();
-    } else 
+    } else if (special == 2)
+    {
+      pushMatrix();
+      fill(0, 200, 200);
+      rect(position.x, position.y, dimentions.x, dimentions.y);
+      popMatrix();
+    } else
     {
       fill(filler);
       rect(position.x, position.y, dimentions.x, dimentions.y);

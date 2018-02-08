@@ -18,8 +18,15 @@ class Bullet extends Entity
     type = "Bullet";
     velocity = PVector.fromAngle(ang);
     velocity.mult(7);
-    filler = color(255, 0, 255);
-    dimentions = new PVector(10, 10);
+    filler = color(0, 0, 255);
+    dimentions = new PVector(15, 15);
   }
   
+  void show()
+  {
+    fill(0);
+    rect(position.x, position.y, dimentions.x + 5, dimentions.y + 5);
+    fill(filler);
+    rect(position.x, position.y, dimentions.x, dimentions.y);
+  }
 }

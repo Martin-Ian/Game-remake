@@ -14,7 +14,8 @@ class Entity
   color filler; //Optional to replace with a image
   boolean moveable; //An immovable Entity won't be able to have a velocity added to it
   float ID = random(1); //This is used in collision
-  boolean special = false;
+  int special = -1;
+  Mother parent = null;
 
   //Base default constructor
   Entity()
@@ -32,7 +33,7 @@ class Entity
   {
     position = new PVector(posX, posY);
     type = "NONE";
-    velocity = new PVector(random(-3, 3), random(-3, 3));
+    velocity = new PVector(0, 0);
     filler = color(random(255), random(255), random(255));
     dimentions = new PVector(50, 50);
     moveable = true;
@@ -61,25 +62,39 @@ class Entity
   }
 
   //Basic collision function, returns if given Entity is colliding with current Entity
-  boolean collides(Entity E)
+  int collides(Entity E)
   {
     if (this.ID != E.ID)
     {
-      if (this.position.x + this.dimentions.x/2 > E.position.x - E.dimentions.x/2)
+      float A_top = this.position.y - this.dimentions.y/2;
+      float A_right = this.position.x + this.dimentions.x/2;
+      float A_bot = this.position.y + this.dimentions.y/2;
+      float A_left = this.position.x - this.dimentions.x/2;
+      
+      float B_top = E.position.y - E.dimentions.y/2;
+      float B_right = E.position.x + E.dimentions.x/2;
+      float B_bot = E.position.y + E.dimentions.y/2;
+      float B_left = E.position.x - E.dimentions.x/2;
+      
+      if(A_bot > B_top && A_left < B_right && A_right > B_left && this.position.y < B_top)
       {
-        if (this.position.x - this.dimentions.x/2 < E.position.x + E.dimentions.x/2)
-        {
-          if (this.position.y + this.dimentions.y/2 > E.position.y - E.dimentions.y/2)
-          {
-            if (this.position.y - this.dimentions.y/2 < E.position.y + E.dimentions.y/2)
-            {
-              return true;
-            }
-          }
-        }
+        return 1;
       }
+      if(A_left < B_right && A_top < B_bot && A_bot > B_top && this.position.x > B_right)
+      {
+        return 2;
+      }
+      if(A_top < B_bot && A_left < B_right && A_right > B_left && this.position.y > B_bot)
+      {
+        return 3;
+      }
+      if(A_right > B_left && A_top < B_bot && A_bot > B_top && this.position.x < B_left)
+      {
+        return 4;
+      }
+      
     }
-    return false;
+    return -1;
   }
 
   //Base update function
@@ -95,7 +110,7 @@ class Entity
     fill(filler);
     rect(position.x, position.y, dimentions.x, dimentions.y);
   }
-  
+
   void move()
   {
     //Intentionally blank
