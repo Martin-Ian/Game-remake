@@ -14,10 +14,11 @@
 * [x] Get enemy to be able to move and shoot at Player
 * [x] Get Enemy and Bullet to collide with Walls
 * [x] Let Player be able to be destroyed and destroy Enemy
-* [ ] Make GameState to handle levels
-* [ ] Create basic levels and title screen
+* [x] Make GameState to handle levels
+* [x] Create basic levels
+* [ ] Create title screen
 * [ ] Create Tutorial
-* [ ] Finish levels
+* [x] Finish levels
 
 ## Optional:
 
